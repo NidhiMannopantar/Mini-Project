@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>Travel Planner</title>
+
+    <link rel="stylesheet" type="text/css" href="C:\Users\Admin\Desktop\MP1\style.css"> 
+</head>
+<body>
+    <header>
+      <div class="main">
+	     <ul> 
+		   <li class="active"><a href="#">Home</a></li>
+		   <li><a href="C:\Users\Admin\Desktop\MP1\services.html">Services</a></li> 
+		    
+		   <li><a href="C:\Users\Admin\Desktop\MP1\about.html">About</a></li> 
+		   <li><a href="C:\Users\Admin\Desktop\MP1\contact.html">Contact</a></li> 
+                   <li><a href="C:\Users\Admin\Desktop\MP1\carpool.html">Carpool</a></li>
+                   <li><a href="C:\Users\Admin\Desktop\MP1\admin.html">Admin</a></li>
+                   <li><a href="C:\Users\Admin\Desktop\MP1\expense.html">Budget Planner</a><li>
+                   <li><a href="C:\Users\Admin\Desktop\MP1\login.html">Login</a></li>
+
+
+		 </ul>
+	  </div>
+      <div class="title">
+          <h1>Welcome to Travel Treks</h1>
+         
+      </div>
+      	</header>
+
+
+
+    
+        <!-- Footer -->
+    <footer>
+        <p>Travel Guide Planner</p>
+    </footer>
+
+
+   
+<script>
+    // Smooth scrolling effect
+    document.querySelectorAll('a[href^=""]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+
+    // Highlight active navigation link
+    const links = document.querySelectorAll("nav ul li a");
+    
+    links.forEach(link => {
+        link.addEventListener("click", function() {
+            links.forEach(item => item.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+
+        </script>
+
+           
+</body>
+</html>

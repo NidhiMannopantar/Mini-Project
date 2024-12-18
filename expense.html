@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Trip Budget Planner</title>
+  <style>
+    /* Simple CSS for better appearance */
+    body {
+  font-family: 'Arial', sans-serif;
+  background-image: url('epic.jpg'); /* Path to your image */
+  background-size: cover; /* Ensures the image covers the entire screen */
+  background-repeat: no-repeat; /* Prevents image repetition */
+  background-attachment: fixed; /* Keeps the image fixed during scrolling */
+  background-position: center center; /* Centers the image */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+#budget-planner {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2, h3 {
+  text-align: center;
+  color: #007BFF;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.recommendations {
+  background-color: #e9f7e9;
+  padding: 15px;
+  border-left: 5px solid #28a745;
+  margin-top: 20px;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+  <section id="budget-planner">
+    <h2>Smart Trip Budget Planner</h2>
+    <form id="budget-form">
+      <label for="location">Trip Location:</label>
+      <input type="text" id="location" placeholder="Enter trip location" required>
+
+      <label for="total-budget">Total Trip Budget (Rs):</label>
+      <input type="number" id="total-budget" placeholder="Enter your total budget" required>
+
+      <button type="button" id="recommend-btn">Get Recommendations</button>
+    </form>
+    
+    <div id="recommendations-container" class="recommendations" style="display: none;">
+      <h3>Recommended Budget Allocation:</h3>
+      <ul id="recommendations-list"></ul>
+    </div>
+  </section>
+
+  <script>
+    // Event Listener for the "Get Recommendations" Button
+    document.getElementById('recommend-btn').addEventListener('click', function() {
+      const location = document.getElementById('location').value.trim().toLowerCase();
+      const totalBudget = parseFloat(document.getElementById('total-budget').value);
+
+      const recommendationsContainer = document.getElementById('recommendations-container');
+      const recommendationsList = document.getElementById('recommendations-list');
+
+      if (!location || isNaN(totalBudget) || totalBudget <= 0) {
+        alert("Please enter a valid trip location and budget.");
+        return;
+      }
+
+      // Determine budget percentages based on location type
+      let transportPercent, accommodationPercent, foodPercent, miscPercent;
+
+      if (location.includes("city") || location.includes("metropolitan")) {
+        // Metropolitan City
+        transportPercent = 20;
+        accommodationPercent = 40;
+        foodPercent = 25;
+        miscPercent = 15;
+      } else if (location.includes("village") || location.includes("countryside")) {
+        // Village or Countryside
+        transportPercent = 15;
+        accommodationPercent = 35;
+        foodPercent = 30;
+        miscPercent = 20;
+      } else if (location.includes("hyped") || location.includes("tourist")) {
+        // Over-Hyped Place
+        transportPercent = 25;
+        accommodationPercent = 45;
+        foodPercent = 20;
+        miscPercent = 10;
+      } else {
+        // Default Category
+        transportPercent = 20;
+        accommodationPercent = 35;
+        foodPercent = 25;
+        miscPercent = 20;
+      }
+
+      // Calculate Allocations
+      const transportCost = ((transportPercent / 100) * totalBudget).toFixed(2);
+      const accommodationCost = ((accommodationPercent / 100) * totalBudget).toFixed(2);
+      const foodCost = ((foodPercent / 100) * totalBudget).toFixed(2);
+      const miscCost = ((miscPercent / 100) * totalBudget).toFixed(2);
+
+      // Display Recommendations
+      recommendationsList.innerHTML = `
+        <li><strong>Transportation:</strong> Rs ${transportCost} (${transportPercent}%)</li>
+        <li><strong>Accommodation:</strong> Rs ${accommodationCost} (${accommodationPercent}%)</li>
+        <li><strong>Food:</strong> Rs ${foodCost} (${foodPercent}%)</li>
+        <li><strong>Miscellaneous:</strong> Rs ${miscCost} (${miscPercent}%)</li>
+      `;
+
+      recommendationsContainer.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

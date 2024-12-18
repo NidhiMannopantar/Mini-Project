@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="C:\Users\Admin\Desktop\MP1\admin.css"> <!-- Use relative path -->
+
+    <title>Admin Section</title>
+</head>
+<body>
+    <h1>Admin Section</h1>
+    <h2>Registered Users:</h2>
+    <div id="passwordSection">
+        <h2>Please enter the admin password to access the Admin Section</h2>
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password" required />
+        <button onclick="checkPassword()">Submit</button>
+        <p id="errorMessage" style="color:red; display:none;">Incorrect password. Please try again.</p>
+    </div>
+
+    <!-- Registered Users List -->
+    <div id="userListSection" style="display:none;">
+        <h2>Registered Users:</h2>
+        <ul id="userList"></ul>
+    </div>
+
+    <script>
+        // The admin password
+        const correctAdminPassword = 'admin123'; // Set your desired admin password
+
+        // Function to check the entered password
+        function checkPassword() {
+            const enteredPassword = document.getElementById('adminPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const passwordSection = document.getElementById('passwordSection');
+            const userListSection = document.getElementById('userListSection');
+
+            // Validate the password
+            if (enteredPassword === correctAdminPassword) {
+                // Hide password section and show user list section
+                passwordSection.style.display = 'none';
+                userListSection.style.display = 'block';
+                loadUserList();
+            } else {
+                // Show error message if password is incorrect
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Function to load and display user list from localStorage
+        function loadUserList() {
+            const userList = document.getElementById('userList');
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            console.log('Users retrieved from localStorage:', users);
+
+            if (users.length === 0) {
+                userList.innerHTML = '<li>No users found</li>';
+            } else {
+                users.forEach((user) => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Username: ${user.username}, Password: ${user.password}`;
+                    userList.appendChild(listItem);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
